@@ -1,0 +1,27 @@
+student: student
+researches:
+   research.test 1:
+      initial : True
+      input:
+         files:  
+            research file 1:
+               name: research 1                                  
+      output:
+         file:
+            
+                    
+   research 2:
+      initial: False
+      
+      input:
+         researches:
+            - research.test 1
+            - research 3 
+      
+   research 3:                  
+      input:
+         researches:
+            - research.test 1                                            
+            
+
+                     

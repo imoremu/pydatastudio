@@ -1,0 +1,54 @@
+general:                 
+      Simple Filter:
+         filter:                
+            attr_1 : 1           
+         scope: all
+      
+      Scope Element:
+         filter:                   
+            attr_1 : 2                  
+         scope: .*element_3$
+            
+      Scope Group:          
+         filter:
+            attr_1 : 3      
+         scope: ^group_2
+         
+      Scope Group Element:          
+         filter:
+            attr_1 : 4      
+         scope: ^group_1.*element_2$
+            
+      
+detail:
+   group_1:
+      pre-filter: 
+         attr-2: 1
+         attr-5: 2
+       
+      specific filters:          
+         element_1:
+            element_1_1:
+               - attr_3: 1
+               - attr_2: 2
+         
+         element_2:
+            attr_3: 2     
+                                       
+         element_3:
+            attr_3: 3
+               
+   group_2:           
+      pre-filter: {}                                    
+      specific filters: 
+         element_3:
+            attr_4: 1
+            
+         element_4:
+            attr_4: 52
+            
+         element 5:
+            element 5_1:
+               - attr_5 : 2
+               - attr_6 : 3
+                              

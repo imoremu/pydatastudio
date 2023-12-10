@@ -1,0 +1,13 @@
+# Default Configuration
+Current: Test
+
+Test:
+   section:      
+      first_level: 
+         second_level: TEST VALUE {id[subid]} {value}     
+ 
+ 
+   var: 
+      data: TEST VAR
+   
+   var_ref: <<var.data>>         
