@@ -6,8 +6,10 @@ Created on 4 dic. 2019
 
 
 import pandas as pd
-from re import match
 from pandas.core.frame import DataFrame
+
+from re import match
+
 from pydatastudio.logging import Logging
 
 class DataFrameManager(object):
@@ -115,5 +117,6 @@ class DataFrameManager(object):
                         result = dataframe[(dataframe[key] == value)]
                     
                     self.logger.debug(f"Filtered data for {key}: {result}")
+
 
         return result
