@@ -1,6 +1,6 @@
 # PyDataStudio
 
-PyDataStudio is a Python project developed using Pandas, designed to streamline the process of collaborative report generation. It follows a modular structure, organizing analyses into 'studies' conducted by specialized 'students.' These students, powered by Pandas, are capable of analyzing input data from various sources (even other student's reports), creating a flexible and efficient environment for insightful report generation.
+PyDataStudio is a Python project developed using Pandas, designed to streamline the process of collaborative report generation. It follows a modular structure, organizing analysis into 'studies' conducted by specialized 'students.' These students, powered by Pandas, are capable of analyzing input data from various sources (even other student's reports), creating a flexible and efficient environment for insightful report generation.
 
 ## Features
 
