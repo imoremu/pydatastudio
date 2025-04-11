@@ -12,11 +12,9 @@ PyDataStudio is a Python project developed using Pandas, designed to streamline 
 
 ### Prerequisites
 
-- Python (version X.X.X)
-- Pandas (version X.X.X)
-- Additional dependencies, if any
+TBD 
 
 ### Installation
 
---
+TBD
 
