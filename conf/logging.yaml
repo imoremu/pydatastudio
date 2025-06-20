@@ -1,0 +1,91 @@
+version: 1
+disable_existing_loggers: true
+
+formatters:
+  simple:
+    format: "%(asctime)s [[%(name)s]][%(funcName)s] %(levelname)s : %(message)s"
+
+handlers:
+  console:
+    class: logging.StreamHandler
+    level: WARNING
+    formatter: simple
+    stream: sys.stdout
+
+  default_file_handler:
+    class: logging.handlers.RotatingFileHandler
+    level: DEBUG
+    formatter: simple
+    filename: ./log/log.log
+    maxBytes: 10485760 # 10MB
+    backupCount: 20
+    when: "M"
+    inteval: 15
+    encoding: utf8
+
+  error_file_handler:
+    class: logging.handlers.RotatingFileHandler
+    level: ERROR
+    formatter: error
+    filename: /tmp/errors.log
+    maxBytes: 10485760 # 10MB
+    backupCount: 20
+    encoding: utf8
+
+  debug_file_handler:
+    class: logging.handlers.RotatingFileHandler
+    level: DEBUG
+    formatter: standard
+    filename: /tmp/debug.log
+    maxBytes: 10485760 # 10MB
+    backupCount: 20
+    encoding: utf8
+
+  critical_file_handler:
+    class: logging.handlers.RotatingFileHandler
+    level: CRITICAL
+    formatter: standard
+    filename: /tmp/critical.log
+    maxBytes: 10485760 # 10MB
+    backupCount: 20
+    encoding: utf8
+
+  warn_file_handler:
+    class: logging.handlers.RotatingFileHandler
+    level: WARN
+    formatter: standard
+    filename: /tmp/warn.log
+    maxBytes: 10485760 # 10MB
+    backupCount: 20
+    encoding: utf8
+
+root:
+  level: NOTSET
+  handlers: [console]
+  propogate: yes
+
+loggers:
+  <module>:
+    level: INFO
+    handlers:
+      [
+        console,
+        info_file_handler,
+        error_file_handler,
+        critical_file_handler,
+        debug_file_handler,
+        warn_file_handler,
+      ]
+    propogate: no
+
+  <module.x>:
+    level: DEBUG
+    handlers:
+      [
+        info_file_handler,
+        error_file_handler,
+        critical_file_handler,
+        debug_file_handler,
+        warn_file_handler,
+      ]
+    propogate: yes

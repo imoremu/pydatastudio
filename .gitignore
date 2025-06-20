@@ -1,0 +1,6 @@
+*log
+*.log
+*_pycache_*
+.env
+.vscode*
+output*
