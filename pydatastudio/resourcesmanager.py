@@ -13,7 +13,7 @@ if hasattr(sys, 'frozen') and hasattr(sys, '_MEIPASS'):
                
 else:   
     
-    BASIC_PATH = os.path.join(os.path.dirname(__file__),"..", "..")
+    BASIC_PATH = os.path.join(os.path.dirname(__file__),"..")
 
 print("Resources basic path: {}".format(BASIC_PATH))
 

@@ -28,7 +28,7 @@ class Test(unittest.TestCase):
          
         expected = "TEST VALUE TEST 1"
         
-        self.assertEquals(result, expected)
+        self.assertEqual(result, expected)
 
 
     def test_get_specific_config_value_with_dict(self):
@@ -39,7 +39,7 @@ class Test(unittest.TestCase):
             
         expected = "TEST VALUE TEST 1"
         
-        self.assertEquals(result, expected)
+        self.assertEqual(result, expected)
         
         
     def test_context_contains(self): 
@@ -54,7 +54,7 @@ class Test(unittest.TestCase):
         
         expected = "TEST VAR"
         
-        self.assertEquals(result, expected)       
+        self.assertEqual(result, expected)       
         
         
 if __name__ == "__main__":

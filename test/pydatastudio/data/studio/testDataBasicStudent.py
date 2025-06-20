@@ -18,7 +18,7 @@ from unittest.mock import Mock, patch, call
 
 class TestAbstractDataBasicStudent(unittest.TestCase):
 
-    BASE_FILE_NAME = resourcesmanager.get_resource_path(os.path.join(".","python", "test", "pydatastudio", "data", "studio", "testdata", "test_student_configuration.yaml"))  
+    BASE_FILE_NAME = resourcesmanager.get_resource_path(os.path.join(".", "test", "pydatastudio", "data", "studio", "testdata", "test_student_configuration.yaml"))  
         
     @patch('pydatastudio.data.studio.datastudio.DataStudio')    
     def setUp(self, studio):        

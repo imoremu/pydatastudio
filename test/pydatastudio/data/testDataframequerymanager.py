@@ -13,7 +13,7 @@ from pydatastudio.data.dataframequerymanager import DataframeQueryManager,\
 
 class TestDataFrameQuery(unittest.TestCase):    
 
-    DEFAULT_CONF_FILE = resourcesmanager.get_resource_path(os.path.join(".", "python", "test", "pydatastudio", "data", "testdata", "query_data.yaml"))
+    DEFAULT_CONF_FILE = resourcesmanager.get_resource_path(os.path.join(".", "test", "pydatastudio", "data", "testdata", "query_data.yaml"))
     
     def setUp(self):        
         

@@ -16,7 +16,7 @@ import os
 
 class TestDataStudentConfiguration(unittest.TestCase):
 
-    BASE_FILE_NAME = resourcesmanager.get_resource_path(os.path.join(".","python", "test", "pydatastudio", "data", "studio", "testdata", "test_student_configuration.yaml"))  
+    BASE_FILE_NAME = resourcesmanager.get_resource_path(os.path.join(".", "test", "pydatastudio", "data", "studio", "testdata", "test_student_configuration.yaml"))  
     
     def setUp(self):
         configuration = yaml.load(open(TestDataStudentConfiguration.BASE_FILE_NAME), Loader=FullLoader)
