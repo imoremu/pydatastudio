@@ -14,7 +14,7 @@ import os
 from pydatastudio.data.studio.abstractdatabasicstudent import AbstractDataBasicStudent
 from pydatastudio import resourcesmanager
 from pydatastudio.data.studio.abstractdatabasicstudent import AbstractDataBasicStudent, ResearchNotFoundException, RequiredResearchNotFoundException
-from pydatastudio.data.studio.datastudioconstants import ENVIRONMENT_FILTER_KEY, ENVIRONMENT_FILTER_DATA_KEY, ENVIRONMENT_RESEARCHES_KEY, ENVIRONMENT_STUDENT_KEY, ENVIRONMENT_INPUT_KEY
+from pydatastudio.data.studio.datastudioconstants import ENVIRONMENT_OUTPUT_FILTER_KEY, ENVIRONMENT_FILTER_DATA_KEY, ENVIRONMENT_RESEARCHES_KEY, ENVIRONMENT_STUDENT_KEY, ENVIRONMENT_INPUT_KEY
 from pydatastudio.data.studio.datastudentconfiguration import DataStudentConfiguration
 
 import pandas as pd
@@ -105,7 +105,7 @@ class TestAbstractDataBasicStudent(unittest.TestCase):
         self.assertFalse(self.student._is_research_provided(research_requested))
     
 
-    def test_research_with_data_filter(self):        
+    def test_research_with_output_data_filter(self):        
         def mock_test_filtered_research(self, research_name, **attrs):
             data = {'col1': ['1', '2', '3', '4'], 'col2': ['A', 'B', 'C', 'A']}
             df = pd.DataFrame(data)
@@ -115,7 +115,7 @@ class TestAbstractDataBasicStudent(unittest.TestCase):
             ENVIRONMENT_STUDENT_KEY: "TestStudent",
             ENVIRONMENT_RESEARCHES_KEY: {
                 "test_filtered_research": {
-                    ENVIRONMENT_FILTER_KEY: {
+                    ENVIRONMENT_OUTPUT_FILTER_KEY: {
                         ENVIRONMENT_FILTER_DATA_KEY: {
                             'col1': '^[13]$'
                         }
@@ -143,7 +143,7 @@ class TestAbstractDataBasicStudent(unittest.TestCase):
         pd.testing.assert_frame_equal(result["test_filtered_research"], expected_df)
 
 
-    def test_research_with_no_filter_info(self):        
+    def test_research_with_no_output_filter_info(self):        
         def mock_test_no_filter_research(self, research_name, **attrs):
             data = {'col1': [1, 2, 3], 'col2': ['X', 'Y', 'Z']}
             df = pd.DataFrame(data)
@@ -167,7 +167,7 @@ class TestAbstractDataBasicStudent(unittest.TestCase):
         expected_df = pd.DataFrame({'col1': [1, 2, 3], 'col2': ['X', 'Y', 'Z']})
         pd.testing.assert_frame_equal(result["test_no_filter_research"], expected_df)
 
-    def test_research_with_empty_filter_data(self):        
+    def test_research_with_empty_output_filter_data(self):        
         def mock_test_empty_filter_research(self, research_name, **attrs):
             data = {'col1': [1, 2, 3], 'col2': ['X', 'Y', 'Z']}
             df = pd.DataFrame(data)
@@ -177,7 +177,7 @@ class TestAbstractDataBasicStudent(unittest.TestCase):
             ENVIRONMENT_STUDENT_KEY: "TestStudent",
             ENVIRONMENT_RESEARCHES_KEY: {
                 "test_empty_filter_research": {
-                    ENVIRONMENT_FILTER_KEY: {
+                    ENVIRONMENT_OUTPUT_FILTER_KEY: {
                         ENVIRONMENT_FILTER_DATA_KEY: {} # Empty filter data
                     }
                 }

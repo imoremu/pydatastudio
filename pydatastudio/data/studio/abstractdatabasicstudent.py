@@ -11,7 +11,7 @@ import re
 
 from pydatastudio.logging import Logging
 from pydatastudio.data.studio.datastudio import AbstractStudent, ResearchNotFoundException, RequiredResearchNotFoundException
-from pydatastudio.data.studio.datastudioconstants import ENVIRONMENT_FILTER_KEY, ENVIRONMENT_FILTER_DATA_KEY
+from pydatastudio.data.studio.datastudioconstants import ENVIRONMENT_OUTPUT_FILTER_KEY, ENVIRONMENT_FILTER_DATA_KEY
     
 from pydatastudio.data.dataframeutils import data_filter_by_dataframe, data_filter_by_dict
 
@@ -93,7 +93,7 @@ class AbstractDataBasicStudent(AbstractStudent):
                         
             Logging.getPerformanceLogger().info(f"\n ----- FINISHED -----\n Research: {research_name}\n Student: {self.name}\n\n -------------- ")
             
-            result = self._obtain_filtered_data(research_name, raw_result, self._obtain_filter_info(research_name, ENVIRONMENT_FILTER_KEY))
+            result = self._obtain_filtered_data(research_name, raw_result, self._obtain_filter_info(research_name, ENVIRONMENT_OUTPUT_FILTER_KEY))
             
         return result
         
