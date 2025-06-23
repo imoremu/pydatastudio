@@ -4,3 +4,5 @@
 .env
 .vscode*
 output*
+dist*
+*.egg-info

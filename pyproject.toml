@@ -1,0 +1,41 @@
+ [build-system]
+ requires = ["setuptools>=42", "wheel"]
+ build-backend = "setuptools.build_meta"
+
+ [project]
+ name = "pydatastudio"
+ version = "0.1.0"  
+ description = "A Python framework for configuration-driven data analysis and report generation."
+ readme = "README.md"  
+ license = { file = "LICENSE.md" } 
+ authors = [     
+     { name = "Iván Moreno Muñoz", email = "ivan.moreno@outlook.com" }
+ ]
+ requires-python = ">=3.7" 
+
+ dependencies = [
+     "pandas",
+     "PyYAML",
+     "openpyxl"
+ ]
+
+ # PyPI classifiers
+ classifiers = [
+     "Development Status :: 3 - Alpha", 
+     "Intended Audience :: Developers",
+     "Intended Audience :: Science/Research",
+     "License :: OSI Approved :: MIT License",
+     "Operating System :: OS Independent",
+     "Programming Language :: Python :: 3",
+     "Programming Language :: Python :: 3.7",
+     "Programming Language :: Python :: 3.8",
+     "Programming Language :: Python :: 3.9",
+     "Programming Language :: Python :: 3.10",
+     "Programming Language :: Python :: 3.11",
+     "Topic :: Scientific/Engineering :: Information Analysis",
+     "Topic :: Software Development :: Libraries :: Python Modules",
+     "Topic :: Utilities"
+ ]
+
+ [project.urls]
+ Homepage = "https://github.com/imoremu/PyDataStudio" 
