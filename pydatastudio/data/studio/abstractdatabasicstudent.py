@@ -3,21 +3,17 @@ Created on 15 feb. 2021
 
 @author: imoreno
 '''
-from pydatastudio.data.studio.datastudio import AbstractStudent,\
-    ResearchNotFoundException
+from typing import Any, Dict, List, Optional, Union
+
+import pandas as pd
 
 import re
 
 from pydatastudio.logging import Logging
-from pydatastudio.data.studio.datastudioconstants import ENVIRONMENT_FILE_KEY,\
-    ENVIRONMENT_FILTER_KEY, ENVIRONMENT_DIR_KEY,\
-    ENVIRONMENT_FILE_NAME_KEY, ENVIRONMENT_FILTER_DATA_KEY
+from pydatastudio.data.studio.datastudio import AbstractStudent, ResearchNotFoundException, RequiredResearchNotFoundException
+from pydatastudio.data.studio.datastudioconstants import ENVIRONMENT_FILTER_KEY, ENVIRONMENT_FILTER_DATA_KEY
     
 from pydatastudio.data.dataframeutils import data_filter_by_dataframe, data_filter_by_dict
-from pydatastudio import resourcesmanager
-
-from pandas.core.frame import DataFrame
-
 
 class AbstractDataBasicStudent(AbstractStudent):
     '''
@@ -33,115 +29,144 @@ class AbstractDataBasicStudent(AbstractStudent):
     Attributes:
         configuration (:class:'DataStudentConfiguration'): The configuration object for the student.
         
-    '''            
-    def __init__(self, configuration):
+    '''
+    def __init__(self, configuration: Any):
         '''
         Constructor
         
-        :param
-        
-        configuration : DataStudentConfiguration object with student configuration
-        
+        :param configuration: DataStudentConfiguration object with student configuration.
         '''
         self.logger = Logging.getLogger(self.__class__.__module__)
         
         self.configuration = configuration
         self.name = configuration.name
+        self.studio = None # Will be set in _join_studio
         
     
-    def _join_studio(self, studio, **attrs):
-                
-        self.studio = studio             
+    def _join_studio(self, studio: Any, **attrs: Any) -> None:
+        """
+        Actions performed by the student when joining the studio.
+        Registers the studio instance and initiates initial researches.
+        """
+        self.studio = studio
         
         for research in self.configuration.obtain_initial_researches():
-            studio.research(research, **attrs)                                   
+            self.studio.research(research, **attrs)
                     
     
-    def _research(self, research_name, **attrs):        
-        
-        # First, all researches needed by the student for implementing the requested research are requested (if they're not already created and stored in the studio)
-        required_researches = self.configuration.obtain_required_researches()[research_name]
-        
-        if required_researches is not None:       
-        
-            if isinstance(required_researches, dict):                
-                required_researches = required_researches.values()
-             
-            for required_research in required_researches:       
-                done = self._check_research_ready(required_research)
-            
-                if not done:
-                    self.studio.research(required_research, **attrs)                                               
-            
-        research_method_name = self._obtain_research_method_name(research_name)            
-                    
-        if not self._is_research_provided(research_name):
+    def _research(self, research_name: str, **attrs: Any) -> Dict[str, pd.DataFrame]:
+        """
+        Performs the requested research, ensuring all prerequisites are met.
+
+        :param research_name: The name of the research to perform.
+        :param attrs: Additional attributes for the research method.
+        :return: A dictionary containing the research results.
+        :raises ResearchNotFoundException: If the research method is not implemented.
+        """                
+        research_method_name = self._obtain_research_method_name(research_name)
+
+        if not hasattr(self, research_method_name):
             
             self.logger.error(f"Research {research_method_name} not available in student {self.name}")            
             raise ResearchNotFoundException(f"Research {research_method_name} not available in student {self.name}")
         
         else:                                   
             
+            required_researches: Optional[Union[List[str], Dict[str, Any]]] = \
+                self.configuration.obtain_required_researches().get(research_name)
+
+            if required_researches is not None:            
+                for required_research in required_researches:
+
+                    # If not studio is provided or if the studio does not provide de research required
+                    if self.studio is None or not self.studio.check_research_provided(required_research):
+                        self.logger.info(f"Research {required_research} not available in studio.")
+                        raise RequiredResearchNotFoundException(f"Research {required_research} not available in studio.")
+
+                    if not self.studio.check_research_ready(required_research):
+                        self.studio.research(required_research, **attrs)                    
+
             Logging.getPerformanceLogger().info(f"\n ----- STARTED-----\n Research: {research_name}\n Student: {self.name}\n\n -------------- ")
             
             research_method = getattr(self, research_method_name)            
-            result = research_method(research_name, **attrs)
-            
+            raw_result = research_method(research_name, **attrs)
+                        
             Logging.getPerformanceLogger().info(f"\n ----- FINISHED -----\n Research: {research_name}\n Student: {self.name}\n\n -------------- ")
-                
-        return result
-        
-    def _is_research_provided(self, research_name):
-        
-        result = hasattr(self, self._obtain_research_method_name(research_name))                                                    
+            
+            result = self._obtain_filtered_data(research_name, raw_result, self._obtain_filter_info(research_name, ENVIRONMENT_FILTER_KEY))
             
         return result
         
-    def _obtain_research_method_name (self, research_name):
+    def _is_research_provided(self, research_name: str) -> bool:
+        """
+        Checks if the student provides a specific research method.
+
+        :param research_name: The name of the research.
+        :return: True if the research method exists, False otherwise.
+        """
+        result = hasattr(self, self._obtain_research_method_name(research_name))
+        return result
         
+    def _obtain_research_method_name(self, research_name: str) -> str:
+        """
+        Converts a research name into the corresponding method name.
+        E.g., "Research A.B-C" becomes "_research_research_a_b_c".
+
+        :param research_name: The original research name.
+        :return: The formatted method name.
+        """
         result = research_name.lower()
-        result = "_research_" + re.sub (" |\.|-", "_", result)                
-                    
+        result = "_research_" + re.sub(r" |\.|-", "_", result)
         return result
     
-    def _check_research_ready(self, research):               
-        return self.studio.check_research_ready(research)                                
+    def _check_research_ready(self, research: str) -> bool:
+        """
+        Checks if a given research is already available in the studio's knowledge base.
+
+        :param research: The name of the research to check.
+        :return: True if the research is ready, False otherwise.
+        """
+        if self.studio is None:
+            raise RuntimeError("Student has not joined a studio yet. Call _join_studio first.")
+        return self.studio.check_research_ready(research)
                              
-    def _obtain_filter_info(self, research_name):
-        result = None
-        
-        if (ENVIRONMENT_FILTER_KEY in self.configuration.obtain_researches()[research_name]):
-        
-            result = self.configuration.obtain_researches()[research_name][ENVIRONMENT_FILTER_KEY]
-        
-        return result
+    def _obtain_filter_info(self, research_name: str, filter_name: str) -> Optional[Dict[str, Any]]:
+        """
+        Retrieves filter information for a specific research from the configuration.
+
+        :param research_name: The name of the research.
+        :return: A dictionary with filter information or None if not found.
+        """
+        # Using .get() for safer access
+        research_config = self.configuration.obtain_researches().get(research_name, {})
+        return research_config.get(filter_name)
 
     
-    def _obtain_filtered_data(self, research_name, research):
-        '''
-        Filter result data. 
+    def _obtain_filtered_data(self, research_name: str, data: Dict[str, pd.DataFrame], filter_info: Optional[Dict[str, Any]]) -> Dict[str, pd.DataFrame]:
+        """
+        Filter data. 
         
         Two kind of filters:
         
         - Dictionary / List of dictionary: Dataframe filtering
-        - File: file with a sheet with a table of cases to be filtered. Each field in each line will represent an AND operand. 
-        Each file line will be included as an OR 
+        - File: file with a sheet with a table of cases to be filtered.
+                Each field in each line will represent an AND operand.
+                Each file line will be included as an OR.
         
-        '''
-        result = research 
+        """
+        # Operate on a copy of the input results to avoid unexpected side effects
+        result = data.copy()
                         
-        if research_name in research and isinstance(research[research_name], DataFrame):
+        # Assuming research_results is a dictionary where research_name maps to a DataFrame
+        if research_name in data and isinstance(data[research_name], pd.DataFrame):
 
             Logging.getPerformanceLogger().info(f"\n ----- FILTER STARTED-----\n Research: {research_name}\n Student: {self.name}\n\n -------------- ")
                                  
-            filtered_df = research[research_name]
-            
-            filter_info = self._obtain_filter_info(research_name)
-            
+            filtered_df = data[research_name]
+                        
             if (filter_info is not None):                
                 if (ENVIRONMENT_FILTER_DATA_KEY in filter_info):
                     data_filter_info = filter_info[ENVIRONMENT_FILTER_DATA_KEY]
-                    
                     filtered_df = data_filter_by_dict(data_filter_info, filtered_df)
                     
                 result[research_name] = filtered_df        

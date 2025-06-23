@@ -153,6 +153,19 @@ class DataStudio(object):
 
         return result
 
+    def check_research_provided(self, research_name):
+        """
+        Checks if the research is provided by any student in the studio
+        """
+        result = False
+
+        for student_name, student in self.students.items():
+            if student._is_research_provided(research_name):
+                result = True
+                break
+
+        return result
+
 
 class AbstractResearchListener:
     def __init__(self):
@@ -211,3 +224,7 @@ class InvalidStudentException(Exception):
 
 class ResearchNotFoundException(Exception):
     pass
+
+class RequiredResearchNotFoundException(Exception):
+    pass
+
