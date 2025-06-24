@@ -5,8 +5,10 @@ Created on 18 nov. 2018
 '''
 
 from pydatastudio.caseformatter import CaseFormatter
-from pydatastudio.logging import Logging
+import logging
 from pydatastudio.environment.contextmanager import ContextManager
+from pydatastudio.environment import environmentconfigmanagement
+
 
 class BaseEnvironmentObject(object):
     '''
@@ -30,43 +32,25 @@ class BaseEnvironmentObject(object):
     BROWSER_ATTR_KEY = "browser"
     BROWSER_TYPE_ATTR_KEY = "type"
     
-    instances = {}
-    
-    def __new__(cls, *args):
-        '''
-            __new__ is overwritten to implement singleton factory pattern.
-            
-            There is only one object per class + consructor args
-            
-        '''
-        logger = Logging.getLogger(cls.__module__)  
-        
-        cls_name = cls.__name__
-        
-        if ((cls_name,args) in cls.instances.keys()):                                   
-            
-            result =  cls.instances[(cls_name,args)]            
-        else:
-            
-            logger.debug("Create new instance for {}".format(cls_name))
-            result = super(BaseEnvironmentObject, cls).__new__(cls)
-            
-            cls.instances[(cls_name,args)] = result
-            
-        return result
-        
+    instances = {}          
           
-    def __init__(self, environment):
+    def __init__(self, environment = None):
         
-        self.logger = Logging.getLogger(self.__class__.__module__)   
+        self.logger = logging.getLogger(__name__) 
         
         if environment is None:
-                         
-            raise Exception("Environment configuration is mandatory attribute for BaseEnvironmentObject")                        
+            empty_environment = { 
+                "config_name": "default_config",
+                "Current": "default",
+                "default": {}
+            }
+
+            environment = environmentconfigmanagement.get_environment_by_config(empty_environment)                    
+            
+            self.logger.info("Environment not provided. Using default environment: {}".format(empty_environment))
         
         self.environment = environment
-        self.context = ContextManager()
-        
+        self.context = ContextManager()        
                          
     def environment_contains(self, *attrs):
         

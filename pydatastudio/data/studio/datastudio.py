@@ -4,8 +4,7 @@ Created on 13 feb. 2021
 @author: imoreno
 """
 from abc import abstractmethod
-
-from pydatastudio.logging import Logging
+import logging
 
 import traceback
 
@@ -34,7 +33,7 @@ class DataStudio():
         Constructor
         """
         self.environment = environment
-        self.logger = Logging.getLogger(self.__class__.__module__)
+        self.logger = logging.getLogger(__name__)
 
         self.knowledge = {}
         self.students = {}
@@ -89,7 +88,7 @@ class DataStudio():
         """
 
         if not research_name in self.knowledge or update:
-            Logging.getPerformanceLogger().info(
+            self.logger.info(
                 f"Studio research requested:\n Research: {research_name}\n\n -------------- "
             )
 

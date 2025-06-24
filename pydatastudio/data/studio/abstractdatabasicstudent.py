@@ -9,7 +9,7 @@ import pandas as pd
 
 import re
 
-from pydatastudio.logging import Logging
+import logging
 from pydatastudio.data.studio.datastudio import AbstractStudent, ResearchNotFoundException, RequiredResearchNotFoundException
 from pydatastudio.data.studio.datastudioconstants import ENVIRONMENT_OUTPUT_FILTER_KEY, ENVIRONMENT_FILTER_DATA_KEY
     
@@ -36,7 +36,8 @@ class AbstractDataBasicStudent(AbstractStudent):
         
         :param configuration: DataStudentConfiguration object with student configuration.
         '''
-        self.logger = Logging.getLogger(self.__class__.__module__)
+        self.logger = logging.getLogger(__name__)
+        self.performance_logger = logging.getLogger(__name__ + ".performance")
         
         self.configuration = configuration
         self.name = configuration.name
@@ -86,12 +87,12 @@ class AbstractDataBasicStudent(AbstractStudent):
                     if not self.studio.check_research_ready(required_research):
                         self.studio.research(required_research, **attrs)                    
 
-            Logging.getPerformanceLogger().info(f"\n ----- STARTED-----\n Research: {research_name}\n Student: {self.name}\n\n -------------- ")
+            self.performance_logger.info(f"\n ----- STARTED-----\n Research: {research_name}\n Student: {self.name}\n\n -------------- ")
             
             research_method = getattr(self, research_method_name)            
             raw_result = research_method(research_name, **attrs)
                         
-            Logging.getPerformanceLogger().info(f"\n ----- FINISHED -----\n Research: {research_name}\n Student: {self.name}\n\n -------------- ")
+            self.performance_logger.info(f"\n ----- FINISHED -----\n Research: {research_name}\n Student: {self.name}\n\n -------------- ")
             
             result = self._obtain_filtered_data(research_name, raw_result, self._obtain_filter_info(research_name, ENVIRONMENT_OUTPUT_FILTER_KEY))
             
@@ -160,7 +161,7 @@ class AbstractDataBasicStudent(AbstractStudent):
         # Assuming research_results is a dictionary where research_name maps to a DataFrame
         if research_name in data and isinstance(data[research_name], pd.DataFrame):
 
-            Logging.getPerformanceLogger().info(f"\n ----- FILTER STARTED-----\n Research: {research_name}\n Student: {self.name}\n\n -------------- ")
+            self.performance_logger.info(f"\n ----- FILTER STARTED-----\n Research: {research_name}\n Student: {self.name}\n\n -------------- ")
                                  
             filtered_df = data[research_name]
                         
@@ -171,7 +172,7 @@ class AbstractDataBasicStudent(AbstractStudent):
                     
                 result[research_name] = filtered_df        
             
-            Logging.getPerformanceLogger().info(f"\n ----- FILTER FINISHED-----\n Research: {research_name}\n Student: {self.name}\n\n -------------- ")
+            self.performance_logger.info(f"\n ----- FILTER FINISHED-----\n Research: {research_name}\n Student: {self.name}\n\n -------------- ")
             
         return result                                                                                           
     

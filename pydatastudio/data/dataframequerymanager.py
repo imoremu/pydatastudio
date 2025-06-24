@@ -3,7 +3,7 @@ Created on 11 feb. 2021
 
 @author: imoreno
 '''
-from pydatastudio.logging import Logging
+import logging
 from yaml.loader import FullLoader
 import yaml
 import re
@@ -80,7 +80,7 @@ class DataframeQueryManager(object):
         '''
         Constructor
         '''
-        self.logger = Logging.getLogger(__name__)   
+        self.logger = logging.getLogger(__name__)   
         
         self.query_info = self._obtain_info(input_info) 
         

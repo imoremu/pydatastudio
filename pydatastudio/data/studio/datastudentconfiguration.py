@@ -6,7 +6,7 @@ Created on 14 feb. 2021
 from pydatastudio.data.studio import datastudioconstants
 from pydatastudio.data.studio.datastudioconstants import ENVIRONMENT_INPUT_KEY,\
     ENVIRONMENT_RESEARCHES_KEY, ENVIRONMENT_STUDENT_KEY
-from pydatastudio.logging import Logging
+import logging
 
 
 class DataStudentConfiguration(object):
@@ -71,7 +71,7 @@ class DataStudentConfiguration(object):
         
         Note: To know more about filters and how to use them, please refer to the documentation of the DataFrameUtils class.
         '''
-        self.logger = Logging.getLogger(self.__class__.__module__)
+        self.logger = logging.getLogger(self.__class__.__module__)
         
         self.configuration = configuration
         

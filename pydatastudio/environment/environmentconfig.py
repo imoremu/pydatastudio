@@ -3,7 +3,7 @@ Created on 17 nov. 2018
 
 @author: imoreno
 '''
-from pydatastudio.logging import Logging
+import logging
 from pydatastudio.environment import environmentconfigmanagement
 from builtins import KeyError
 
@@ -60,7 +60,7 @@ class _EnvironmentConfig(object):
            
         '''
         
-        self.logger = Logging.getLogger(__name__)    
+        self.logger = logging.getLogger(__name__)    
         self.config = config
            
         try:

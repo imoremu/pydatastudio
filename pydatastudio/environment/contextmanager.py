@@ -5,7 +5,7 @@ Created on 7 feb. 2020
 '''
 
 from pydatastudio.caseformatter import CaseFormatter
-from pydatastudio.logging import Logging
+import logging
 
 class ContextManager(object):
     
@@ -25,7 +25,7 @@ class ContextManager(object):
     
     def __init__(self):
         
-        self.logger = Logging.getLogger(self.__class__.__module__)
+        self.logger = logging.getLogger(__name__)
                
     def get_context_data(self, attribute):
         result = None

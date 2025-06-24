@@ -8,13 +8,13 @@ import re
 from pydatastudio import resourcesmanager
 
 from pandas.core.frame import DataFrame
-from pydatastudio.logging import Logging
+import logging
 import pandas
 from re import match
 from pandas.core.series import Series
 import traceback
 
-logger = Logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 
 def obtain_dataframe_from_sheet(ws, strip_str=True):

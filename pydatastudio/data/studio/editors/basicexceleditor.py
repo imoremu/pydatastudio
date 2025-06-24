@@ -14,7 +14,7 @@ import re
 
 from pydatastudio import resourcesmanager
 from pydatastudio.data.studio.datastudio import AbstractResearchListener
-from pydatastudio.logging import Logging
+import logging
 from pydatastudio.data.studio.editors.editorconstants import (
     EXCEL_EDITOR_CONFIGURATION_SAVE_KEY,
     EXCEL_EDITOR_CONFIGURATION_FILE_KEY,
@@ -59,7 +59,8 @@ class BasicExcelEditor(AbstractResearchListener):
         Constructor
 
         """
-        self.logger = Logging.getLogger(self.__class__.__module__)
+        self.logger = logging.getLogger(__name__)
+        self.performance_logger = logging.getLogger(__name__ + ".performance")
         self.environment = environment     
         self.files_created = []   
 
@@ -145,7 +146,7 @@ class BasicExcelEditor(AbstractResearchListener):
                     f"Creating saving thread for research {output_research_name}"
                 )
 
-                Logging.getPerformanceLogger().info(
+                self.performance_logger.info(
                     f"\n ----- SAVING DATA -----\n Research: {research_name}\n Output: {edition_name}\n\n -------------- "
                 )
 
@@ -229,7 +230,7 @@ class BasicExcelEditor(AbstractResearchListener):
                         **attrs,
                     )
 
-                    Logging.getPerformanceLogger().info(
+                    self.performance_logger.info(
                         f"\n ----- SAVE DATA STARTED-----\n Research: {research_name}\n Output: {edition_name} - {filename}\n\n -------------- "
                     )
 
@@ -239,7 +240,7 @@ class BasicExcelEditor(AbstractResearchListener):
                         )
                                        
                         for key, value in data.items():
-                            Logging.getPerformanceLogger().info(
+                            self.performance_logger.getPerformanceLogger().info(
                                 f"\n ----- SAVE DATA STARTED-----\n Research: {research_name}\n Output: {edition_name} - {key}\n\n -------------- "
                             )
 
@@ -257,16 +258,16 @@ class BasicExcelEditor(AbstractResearchListener):
                                     f"Key: {key} filtered in {research_name} research"
                                 )
 
-                            Logging.getPerformanceLogger().info(
+                            self.performance_logger.info(
                                 f"\n ----- SAVE DATA FINISHED -----\n Research: {research_name}\n Output: {edition_name} - {key}\n\n -------------- "
                             )                                
                         
-                        Logging.getPerformanceLogger().info(
+                        self.performance_logger.info(
                             f"\n ----- SAVE DATA FINISHED -----\n Research: {research_name}\n Output: {edition_name} - {filename}\n\n -------------- "
                         )
 
                     except Exception as e:
-                        Logging.getPerformanceLogger().info(
+                        self.performance_logger.info(
                             f"\n ----- SAVE DATA FINISHED WITH ERROR -----\n Research: {research_name}\n Output: {edition_name} - {filename}\n\n -------------- "
                         )
 
@@ -339,7 +340,7 @@ class BasicExcelEditor(AbstractResearchListener):
 
             traceback.print_exc()
 
-        Logging.getPerformanceLogger().info(
+        self.performance_logger.info(
             f"\n ----- SAVE DATA FINISHED -----\n Research: {research_name}\n Output: {edition_name}\n\n -------------- "
         )
 

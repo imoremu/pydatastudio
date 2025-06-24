@@ -4,9 +4,9 @@ Created on 26 feb. 2021
 @author: imoreno
 '''
 from pandas.core.frame import DataFrame
-from pydatastudio.logging import Logging
+import logging
 
-logger = Logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 def research_index_max_level (research, level = 0):     
     '''

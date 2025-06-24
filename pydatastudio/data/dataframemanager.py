@@ -10,7 +10,7 @@ from pandas.core.frame import DataFrame
 
 from re import match
 
-from pydatastudio.logging import Logging
+import logging
 
 class DataFrameManager(object):
     '''
@@ -46,7 +46,7 @@ class DataFrameManager(object):
         :type strip_str: bool
 
         '''
-        self.logger = Logging.getLogger(self.__class__.__module__)
+        self.logger = logging.getLogger(__name__)
         self.dataframe = dataframe
 
         if strip_str:
