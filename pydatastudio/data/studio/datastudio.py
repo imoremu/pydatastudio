@@ -4,11 +4,13 @@ Created on 13 feb. 2021
 @author: imoreno
 """
 from abc import abstractmethod
+
 from pydatastudio.logging import Logging
+
 import traceback
 
 
-class DataStudio(object):
+class DataStudio():
     """
     classdocs
 
@@ -27,17 +29,32 @@ class DataStudio(object):
 
     """
 
-    def __init__(self):
+    def __init__(self, environment=None):
         """
         Constructor
         """
+        self.environment = environment
         self.logger = Logging.getLogger(self.__class__.__module__)
 
         self.knowledge = {}
         self.students = {}
         self.research_listeners = {}
 
+    def add_studio_research(self, research_name, research):
+        """
+        Adds a research to the studio's knowledge base.
+        :param research_name: Name of the research to be added
+        :param research: The research data to be added, should be a dictionary.
+        """
+        self.knowledge[research_name] = research        
+
     def add_student(self, student_name, student):
+        """
+        Adds a student to the studio.
+        :param student_name: Name of the student to be added
+        :param student: The student object to be added, should be
+        an AbstractStudent subclass.
+        """
         if isinstance(student, AbstractStudent):
             self.students[student_name] = student
             student._join_studio(self)

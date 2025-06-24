@@ -8,6 +8,7 @@ from pydatastudio.data.studio.datastudio import DataStudio
 from pydatastudio.data.studio.abstractdatabasicstudent import AbstractDataBasicStudent
 from unittest.mock import patch, Mock
 
+import pandas as pd
 
 class TestDataStudio(unittest.TestCase):
 
@@ -29,6 +30,31 @@ class TestDataStudio(unittest.TestCase):
 
     def tearDown(self):
         pass
+
+    def test_add_studio_research(self):
+        research_name = "test_research"
+        test_research_data = {"key1": "value1", "key2": pd.DataFrame({"col": [1, 2]})}
+
+        self.studio.add_studio_research(research_name, test_research_data)
+
+        self.assertIn(research_name, self.studio.knowledge)
+        self.assertEqual(self.studio.knowledge[research_name], test_research_data)
+
+    def test_add_studio_research_overwrites_existing(self):        
+        research_name = "existing_research"
+        initial_data = {"version": 1, "value": "old"}
+        updated_data = {"version": 2, "value": "new", "extra": True}
+
+        # Add initial research
+        self.studio.add_studio_research(research_name, initial_data)
+        self.assertIn(research_name, self.studio.knowledge)
+        self.assertEqual(self.studio.knowledge[research_name], initial_data)
+
+        # Overwrite with new data
+        self.studio.add_studio_research(research_name, updated_data)
+        self.assertIn(research_name, self.studio.knowledge)
+        self.assertEqual(self.studio.knowledge[research_name], updated_data)
+        self.assertNotEqual(self.studio.knowledge[research_name], initial_data)
 
     def testResearchWithOneStudent(self):
         

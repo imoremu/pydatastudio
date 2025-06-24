@@ -27,25 +27,49 @@ class DataStudentConfiguration(object):
             researchs:
                research 1:
                   initial : [True|False]
-                  input: {}                                  
-                  output:{}
-                  filter:{}                        
+                  input:
+                    researches:
+                        - research_name_1
+                        - research_name_2
+                        
+                  input filters: 
+                    filter name A: {}
+                    filter name B: {}                                      
+                  output filter:{}                        
                   attrs: {}
                       
                research 2:
                   initial : [True|False]
-                  input: {}                                  
-                  output:{}
-                  filter:{}                        
+                  input: {}      
+                  input filters: 
+                    filter name X: {}
+                    filter name Y: {}                                      
+                  
+                  output filter:{}                        
                   attrs: {}
             ...
             
                research n:                  
                   initial : [True|False]
-                  input: {}                                  
-                  output:{}
-                  filter:{}      
-                  attrs: {}                    
+                  input: {}      
+                  input filters:{} 
+                  output filter:{}     
+                  attrs: {}             
+
+
+        Attributes definition:
+
+        - student: Name of the student
+        - researches: Dictionary of researches, where each key is the research name and the value is a dictionary with the research configuration.
+        - initial: Researches that the student provides automatically when included in a studio (even if it's not requested explicitly by any consumer).        
+        - input: Dictionary of input sources for the research. Can contain 'files', 'researches', 'bbdd', 'dictionary' or any other source type. The student is responsible for interpreting and using these sources.               
+        - input filters (Optional): Dictionary of filters (dictionary or a list of dictionaries) to be applied to input data.
+        - output filter (Optional): Filters to be applied to output data. It can be a dictionary or a list of dictionaries.
+        - attrs (Optional): Additional attributes for the research method.
+        
+        The configuration should be structured to allow the student to understand what researches it can perform, what inputs it needs, and how to filter the data.
+        
+        Note: To know more about filters and how to use them, please refer to the documentation of the DataFrameUtils class.
         '''
         self.logger = Logging.getLogger(self.__class__.__module__)
         
