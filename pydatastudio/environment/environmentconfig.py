@@ -98,18 +98,7 @@ class _EnvironmentConfig(object):
             result = self._getEnvironmentConfigValue(environment, result[2:-2])            
         
         return result
-        
-    
-    def getConfigValue(self, attribute):
-        
-        self.logger.debug("attribute: {}".format(attribute))
-        try:
-            result = self._getEnvironmentConfigValue(self.current_environment, attribute)
-            self.logger.debug("result: {}".format(result))
-        except:
-            raise ConfigElementNotFoundException("Configuration value could not be found for: {}".format(str(attribute)))
-        
-        return result
+                
             
     def _getEnvironmentConfigValue (self, environment, attribute):
         try:
