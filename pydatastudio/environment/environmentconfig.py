@@ -115,5 +115,3 @@ class _EnvironmentConfig(object):
         return result
        
     
-class ConfigElementNotFoundException(Exception):
-    pass       

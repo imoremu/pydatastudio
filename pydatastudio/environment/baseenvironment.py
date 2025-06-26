@@ -14,7 +14,7 @@ class BaseEnvironmentObject(object):
     '''
         Base class for Environment object.
         
-        An environment object y an implementation that depends on a environment configuration. It allows to change the basic functionality 
+        An environment object is an implementation that depends on a environment configuration. It allows to change the basic functionality 
         depending on configuration data.
         
         Moreover, BasicEnvironmentObject allows the environment to be decorated by the current context of the environment.    
