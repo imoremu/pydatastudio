@@ -4,8 +4,11 @@ Created on 17 nov. 2018
 @author: imoreno
 '''
 import logging
-from pydatastudio.environment import environmentconfigmanagement
+from pydatastudio.environment import environment_config_management
+
 from builtins import KeyError
+
+from pydatastudio.environment.exceptions import ConfigElementNotFoundException
 
 class _EnvironmentConfig(object):
     '''
@@ -13,7 +16,7 @@ class _EnvironmentConfig(object):
     
     _EnvironmentConfig is the class responsible of parsing environment configuration data.
     
-    **IMPORTANT: This class should not be used directly. It should be used by mean of environmentconfigmanagement module.**
+    **IMPORTANT: This class should not be used directly. It should be used by mean of environment_config_management module.**
     
     Config data should be a dict with next format::
         
@@ -66,7 +69,7 @@ class _EnvironmentConfig(object):
         try:
                     
             if (current_environment is None):
-                self.current_environment = self.config[environmentconfigmanagement.CURRENT_ENVIRONMENT_NAME]
+                self.current_environment = self.config[environment_config_management.CURRENT_ENVIRONMENT_NAME]
             else:
                 self.current_environment = current_environment
     

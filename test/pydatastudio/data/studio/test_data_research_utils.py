@@ -8,7 +8,7 @@ import unittest
 from pandas.core.frame import DataFrame
 from pandas.testing import assert_frame_equal
 
-from pydatastudio.data.studio.dataresearchutils import research_index_max_level, summary_research
+from pydatastudio.data.studio.data_research_utils import research_index_max_level, summary_research
 
 
 data_goal_1 = {"A" : [1,2,3], "B" : [4,5,6]}

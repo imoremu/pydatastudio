@@ -5,7 +5,7 @@ Created on 24 dic. 2018
 '''
 import yaml
 from yaml.loader import FullLoader
-from pydatastudio.environment import environmentconfig
+from pydatastudio.environment import environment_config
 
 environment_confs = {}
 
@@ -94,7 +94,7 @@ def get_environment_by_config(config, current_environment=None):
     if ((config_name, current_environment) in environment_confs):
         result = environment_confs.get((config_name, current_environment))
     else:
-        result = environmentconfig._EnvironmentConfig(config, current_environment)
+        result = environment_config._EnvironmentConfig(config, current_environment)
         environment_confs[(config_name, current_environment)] = result
         
     return result

@@ -4,7 +4,7 @@ Created on 26 feb. 2020
 @author: imoreno
 '''
 import unittest
-from pydatastudio.caseformatter import CaseFormatter
+from pydatastudio.case_formatter import CaseFormatter
 import re
 
 

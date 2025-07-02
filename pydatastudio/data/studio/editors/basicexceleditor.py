@@ -12,8 +12,8 @@ from pandas.core.frame import DataFrame
 import traceback
 import re
 
-from pydatastudio import resourcesmanager
-from pydatastudio.data.studio.datastudio import AbstractResearchListener
+from pydatastudio import resources_manager
+from pydatastudio.data.studio.data_studio import AbstractResearchListener
 import logging
 from pydatastudio.data.studio.editors.editorconstants import (
     EXCEL_EDITOR_CONFIGURATION_SAVE_KEY,
@@ -27,7 +27,7 @@ from pydatastudio.data.studio.editors.editorconstants import (
     EXCEL_EDITOR_CONFIGURATION_BASE_RESEARCH_KEY,
     EXCEL_EDITOR_CONFIGURATION_FILTER_KEY,
 )
-from pydatastudio.data.studio.dataresearchutils import research_index_max_level
+from pydatastudio.data.studio.data_research_utils import research_index_max_level
 
 class BasicExcelEditor(AbstractResearchListener):
     """
@@ -240,7 +240,7 @@ class BasicExcelEditor(AbstractResearchListener):
                         )
                                        
                         for key, value in data.items():
-                            self.performance_logger.getPerformanceLogger().info(
+                            self.performance_logger.info(
                                 f"\n ----- SAVE DATA STARTED-----\n Research: {research_name}\n Output: {edition_name} - {key}\n\n -------------- "
                             )
 
@@ -499,9 +499,9 @@ class BasicExcelEditor(AbstractResearchListener):
         :return: The ExcelWriter instance.
         :rtype: pandas.io.excel.ExcelWriter
         """
-        fileabspath = resourcesmanager.get_resource_path(filename)
-        resourcesmanager.create_path_if_needed(fileabspath)
+        fileabspath = resources_manager.get_resource_path(filename)
+        resources_manager.create_path_if_needed(fileabspath)
 
         return ExcelWriter(
-                resourcesmanager.get_resource_path(fileabspath), engine="openpyxl", mode="w"
+                resources_manager.get_resource_path(fileabspath), engine="openpyxl", mode="w"
         )

@@ -6,8 +6,8 @@ Created on 11 mar. 2020
 import unittest
 import os
 import yaml
-from pydatastudio.environment import environmentconfig
-from pydatastudio.environment.baseenvironment import BaseEnvironmentObject
+from pydatastudio.environment import environment_config
+from pydatastudio.environment.base_environment import BaseEnvironmentObject
 
 
 class Test(unittest.TestCase):
@@ -17,7 +17,7 @@ class Test(unittest.TestCase):
         conf_file = os.path.join(os.path.dirname(os.path.realpath(__file__)), "conf","test_configuration.yaml")
         config = yaml.safe_load(open(conf_file))
                 
-        parser = environmentconfig._EnvironmentConfig(config)
+        parser = environment_config._EnvironmentConfig(config)
         
         self.environment = BaseEnvironmentObject(parser)
         

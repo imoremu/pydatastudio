@@ -10,10 +10,10 @@ import pandas as pd
 import re
 
 import logging
-from pydatastudio.data.studio.datastudio import AbstractStudent, ResearchNotFoundException, RequiredResearchNotFoundException
-from pydatastudio.data.studio.datastudioconstants import ENVIRONMENT_OUTPUT_FILTER_KEY, ENVIRONMENT_FILTER_DATA_KEY
+from pydatastudio.data.studio.data_studio import AbstractStudent, ResearchNotFoundException, RequiredResearchNotFoundException
+from pydatastudio.data.studio.data_studio_constants import ENVIRONMENT_OUTPUT_FILTER_KEY, ENVIRONMENT_FILTER_DATA_KEY
     
-from pydatastudio.data.dataframeutils import data_filter_by_dataframe, data_filter_by_dict
+from pydatastudio.data.dataframe_utils import data_filter_by_dataframe, data_filter_by_dict
 
 class AbstractDataBasicStudent(AbstractStudent):
     '''

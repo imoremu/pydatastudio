@@ -8,9 +8,9 @@ import importlib
 import logging
 from typing import Dict, Any, Optional
 
-from pydatastudio.data.studio.datastudentconfiguration import DataStudentConfiguration
-from pydatastudio.data.studio.datastudio import AbstractStudent
-from pyportfolio.studio.students.abstract_student_factory import AbstractStudentFactory
+from pydatastudio.data.studio.students.data_student_configuration import DataStudentConfiguration
+from pydatastudio.data.studio.data_studio import AbstractStudent
+from pydatastudio.data.studio.students.abstract_student_factory import AbstractStudentFactory
 
 class StudentFactory(AbstractStudentFactory):
     """

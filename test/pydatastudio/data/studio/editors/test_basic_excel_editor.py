@@ -11,13 +11,13 @@ import os
 from unittest.mock import Mock, patch
 from pandas.core.frame import DataFrame
 
-from pydatastudio.environment.environmentconfigmanagement import (
+from pydatastudio.environment.environment_config_management import (
     get_environment_by_config,
 )
-from pydatastudio.environment.baseenvironment import BaseEnvironmentObject
+from pydatastudio.environment.base_environment import BaseEnvironmentObject
 from pydatastudio.data.studio.editors.basicexceleditor import BasicExcelEditor
-from pydatastudio.data.studio.datastudio import DataStudio
-from pydatastudio.resourcesmanager import get_resource_path
+from pydatastudio.data.studio.data_studio import DataStudio
+from pydatastudio.resources_manager import get_resource_path
 
 
 class TestBasicExcelEditor(unittest.TestCase):

@@ -5,7 +5,6 @@ Created on 13 feb. 2021
 """
 from abc import abstractmethod
 import logging
-import importlib
 
 from pydatastudio.data.studio.environment.data_studio_environment import DataStudioEnvironment
 
@@ -31,37 +30,16 @@ class DataStudio():
 
     """
 
-    def __init__(self, environment:DataStudioEnvironment=None):
+    def __init__(self):
         """
         Constructor
         """
-        self.environment = environment
+        
         self.logger = logging.getLogger(__name__)
 
         self.knowledge = {}
-
-        if self.environment is not None:
-            self.initStudents()
-
+        self.students = {}
         self.research_listeners = {}
-
-    def init_students(self):
-        """
-        Asks the configured factory to create all students and then adds them.
-        This method is now completely agnostic of the data source.
-        """
-        factory_class_path = self.environment.get_student_factory_class_name()
-
-        if not factory_class_path:
-            raise ValueError("Student factory 'class' not defined in environment configuration.")
-
-        module_name, class_name = factory_class_path.rsplit('.', 1)
-        module = importlib.import_module(module_name)
-        student_factory = getattr(module, class_name)
-        student_objects = student_factory.create_students()
-        
-        for student_name, student_obj in student_objects.items():
-            self.add_student(student_name, student_obj)
 
     def add_studio_research(self, research_name, research):
         """

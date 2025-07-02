@@ -6,14 +6,14 @@ Created on 11 feb. 2021
 import os
 import unittest
 
-from pydatastudio import resourcesmanager
-from pydatastudio.data.dataframequerymanager import DataframeQueryManager,\
+from pydatastudio import resources_manager
+from pydatastudio.data.dataframe_query_manager import DataframeQueryManager,\
     SPECIFIC_FILTERS_KEY
 
 
 class TestDataFrameQuery(unittest.TestCase):    
 
-    DEFAULT_CONF_FILE = resourcesmanager.get_resource_path(os.path.join(".", "test", "pydatastudio", "data", "testdata", "query_data.yaml"))
+    DEFAULT_CONF_FILE = resources_manager.get_resource_path(os.path.join(".", "test", "pydatastudio", "data", "testdata", "query_data.yaml"))
     
     def setUp(self):        
         

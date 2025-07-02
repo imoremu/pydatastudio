@@ -1,4 +1,4 @@
-from pydatastudio.environment.baseenvironment import BaseEnvironmentObject
+from pydatastudio.environment.base_environment import BaseEnvironmentObject
 
 from pydatastudio.environment.exceptions import ConfigElementNotFoundException
 

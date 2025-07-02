@@ -3,8 +3,7 @@ Created on 14 feb. 2021
 
 @author: imoreno
 '''
-from pydatastudio.data.studio import datastudioconstants
-from pydatastudio.data.studio.datastudioconstants import ENVIRONMENT_INPUT_KEY,\
+from pydatastudio.data.studio.data_studio_constants import ENVIRONMENT_INPUT_KEY, ENVIRONMENT_INITIAL_KEY,\
     ENVIRONMENT_RESEARCHES_KEY, ENVIRONMENT_STUDENT_KEY
 import logging
 
@@ -99,8 +98,8 @@ class DataStudentConfiguration(object):
         else:
             for research_name, research in self.obtain_researches().items():
                 # If research has no defined initial attribute, research is not generated initially
-                if (datastudioconstants.ENVIRONMENT_INITIAL_KEY in research and 
-                   research[datastudioconstants.ENVIRONMENT_INITIAL_KEY]):
+                if (ENVIRONMENT_INITIAL_KEY in research and 
+                   research[ENVIRONMENT_INITIAL_KEY]):
                         
                         result.append(research_name)
                     

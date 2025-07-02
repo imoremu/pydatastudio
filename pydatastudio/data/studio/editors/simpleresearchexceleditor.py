@@ -3,11 +3,11 @@ Created on 16 feb. 2021
 
 @author: imoreno
 '''
-from pydatastudio import resourcesmanager
+from pydatastudio import resource_manager
 
 from string import Formatter
 from datetime import datetime
-from pydatastudio.data.studio.datastudio import AbstractResearchListener
+from pydatastudio.data.studio.data_studio import AbstractResearchListener
 
 
 class DataResearchExcelEditor(AbstractResearchListener):
@@ -31,8 +31,8 @@ class DataResearchExcelEditor(AbstractResearchListener):
         
         if save_data:
             
-            filename = resourcesmanager.get_resource_path(self.configuration[DataResearchExcelEditor.FILENAME_KEY]) 
-            sheetname = resourcesmanager.get_resource_path(self.configuration[DataResearchExcelEditor.SHEET_NAME]) 
+            filename = resource_manager.get_resource_path(self.configuration[DataResearchExcelEditor.FILENAME_KEY]) 
+            sheetname = resource_manager.get_resource_path(self.configuration[DataResearchExcelEditor.SHEET_NAME]) 
             
             for research_item_name, research_item_data in research.items():                                    
                 self.save_file(research_item_data, filename, sheetname, {"research" : research_item_name})
@@ -54,4 +54,4 @@ class DataResearchExcelEditor(AbstractResearchListener):
     
         self.logger.info (f"Save file {output_file}")
         
-        dataframe.to_excel(resourcesmanager.get_resource_path(output_file))
+        dataframe.to_excel(resource_manager.get_resource_path(output_file))

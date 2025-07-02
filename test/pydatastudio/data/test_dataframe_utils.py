@@ -4,19 +4,19 @@ Created on 30 mar. 2021
 @author: imoreno
 """
 import unittest
-from pydatastudio.data.dataframeutils import (
+from pydatastudio.data.dataframe_utils import (
     data_filter_by_dataframe,
     data_filter_by_dict,
     merge_dataframes_by_function,
 )
 
-from pydatastudio import resourcesmanager
+from pydatastudio import resources_manager
 import os
 import pandas as pd
 from datetime import datetime
 
 # Filter
-MERGE_FILES_DIR = resourcesmanager.get_resource_path(
+MERGE_FILES_DIR = resources_manager.get_resource_path(
     os.path.join(".", "python", "test", "resources", "data", "testdata")
 )
 MERGE_FILES_PATTERN = "^(?!.*Non_Merged).*.xlsx$"

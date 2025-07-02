@@ -4,7 +4,7 @@ Created on 7 feb. 2020
 @author: imoreno
 '''
 
-from pydatastudio.caseformatter import CaseFormatter
+from pydatastudio.case_formatter import CaseFormatter
 import logging
 
 class ContextManager(object):

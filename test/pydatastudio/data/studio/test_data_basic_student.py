@@ -11,19 +11,19 @@ import yaml
 
 import os
 
-from pydatastudio.data.studio.abstractdatabasicstudent import AbstractDataBasicStudent
-from pydatastudio import resourcesmanager
-from pydatastudio.data.studio.abstractdatabasicstudent import AbstractDataBasicStudent, ResearchNotFoundException, RequiredResearchNotFoundException
-from pydatastudio.data.studio.datastudioconstants import ENVIRONMENT_OUTPUT_FILTER_KEY, ENVIRONMENT_FILTER_DATA_KEY, ENVIRONMENT_RESEARCHES_KEY, ENVIRONMENT_STUDENT_KEY, ENVIRONMENT_INPUT_KEY
-from pydatastudio.data.studio.datastudentconfiguration import DataStudentConfiguration
+from pydatastudio.data.studio.students.abstract_data_basic_student import AbstractDataBasicStudent
+from pydatastudio import resources_manager
+from pydatastudio.data.studio.students.abstract_data_basic_student import AbstractDataBasicStudent, ResearchNotFoundException
+from pydatastudio.data.studio.data_studio_constants import ENVIRONMENT_OUTPUT_FILTER_KEY, ENVIRONMENT_FILTER_DATA_KEY, ENVIRONMENT_RESEARCHES_KEY, ENVIRONMENT_STUDENT_KEY, ENVIRONMENT_INPUT_KEY
+from pydatastudio.data.studio.students.data_student_configuration import DataStudentConfiguration
 
 import pandas as pd
 
 class TestAbstractDataBasicStudent(unittest.TestCase):
 
-    BASE_FILE_NAME = resourcesmanager.get_resource_path(os.path.join(".", "test", "pydatastudio", "data", "studio", "testdata", "test_student_configuration.yaml"))  
+    BASE_FILE_NAME = resources_manager.get_resource_path(os.path.join(".", "test", "pydatastudio", "data", "studio", "testdata", "test_student_configuration.yaml"))  
         
-    @patch('pydatastudio.data.studio.datastudio.DataStudio')    
+    @patch('pydatastudio.data.studio.data_studio.DataStudio')    
     def setUp(self, studio):        
         configuration = DataStudentConfiguration(yaml.load(open(TestAbstractDataBasicStudent.BASE_FILE_NAME), Loader=FullLoader))
         

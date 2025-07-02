@@ -4,10 +4,10 @@ Created on 18 nov. 2018
 @author: imoreno
 '''
 
-from pydatastudio.caseformatter import CaseFormatter
+from pydatastudio.case_formatter import CaseFormatter
 import logging
-from pydatastudio.environment.contextmanager import ContextManager
-from pydatastudio.environment import environmentconfigmanagement
+from pydatastudio.environment.context_manager import ContextManager
+from pydatastudio.environment import environment_config_management
 
 
 class BaseEnvironmentObject(object):
@@ -45,7 +45,7 @@ class BaseEnvironmentObject(object):
                 "default": {}
             }
 
-            environment = environmentconfigmanagement.get_environment_by_config(empty_environment)                    
+            environment = environment_config_management.get_environment_by_config(empty_environment)                    
             
             self.logger.info("Environment not provided. Using default environment: {}".format(empty_environment))
         

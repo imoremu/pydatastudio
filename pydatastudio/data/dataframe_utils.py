@@ -3,10 +3,6 @@ Created on 30 mar. 2021
 
 @author: imoreno
 """
-import os
-import re
-from pydatastudio import resourcesmanager
-
 from pandas.core.frame import DataFrame
 import logging
 import pandas

@@ -5,8 +5,8 @@ Created on 14 feb. 2021
 '''
 import unittest
 
-from pydatastudio import resourcesmanager
-from pydatastudio.data.studio.datastudentconfiguration import DataStudentConfiguration
+from pydatastudio import resources_manager
+from pydatastudio.data.studio.students.data_student_configuration import DataStudentConfiguration
 
 from yaml.loader import FullLoader
 import yaml
@@ -16,7 +16,7 @@ import os
 
 class TestDataStudentConfiguration(unittest.TestCase):
 
-    BASE_FILE_NAME = resourcesmanager.get_resource_path(os.path.join(".", "test", "pydatastudio", "data", "studio", "testdata", "test_student_configuration.yaml"))  
+    BASE_FILE_NAME = resources_manager.get_resource_path(os.path.join(".", "test", "pydatastudio", "data", "studio", "testdata", "test_student_configuration.yaml"))  
     
     def setUp(self):
         configuration = yaml.load(open(TestDataStudentConfiguration.BASE_FILE_NAME), Loader=FullLoader)

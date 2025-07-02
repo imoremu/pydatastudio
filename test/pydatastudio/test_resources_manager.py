@@ -7,7 +7,7 @@ import unittest
 import os
 import shutil
 
-from pydatastudio import resourcesmanager
+from pydatastudio import resources_manager
 
 
 class Test(unittest.TestCase):
@@ -18,7 +18,7 @@ class Test(unittest.TestCase):
 
         expected = os.path.join(os.path.dirname(__file__), "conf", "test.file")
 
-        result = resourcesmanager.get_resource_path(conf_file)
+        result = resources_manager.get_resource_path(conf_file)
 
         self.assertFalse(os.path.isabs(conf_file), "Input path is absolute")
 
@@ -34,7 +34,7 @@ class Test(unittest.TestCase):
 
         expected = os.path.abspath(conf_file)
 
-        result = resourcesmanager.get_resource_path(conf_file)
+        result = resources_manager.get_resource_path(conf_file)
 
         self.assertTrue(os.path.isabs(conf_file), "Input path is not absolute")
 
@@ -45,7 +45,7 @@ class Test(unittest.TestCase):
         )
 
     def testCreateDir(self):
-        DEFAULT_CONF_FILE = resourcesmanager.get_resource_path(
+        DEFAULT_CONF_FILE = resources_manager.get_resource_path(
             os.path.join("output", "test_create_dir", "test.yaml")
         )
 
@@ -54,7 +54,7 @@ class Test(unittest.TestCase):
         if os.path.exists(path):
             shutil.rmtree(path)
 
-        resourcesmanager.create_path_if_needed(DEFAULT_CONF_FILE)
+        resources_manager.create_path_if_needed(DEFAULT_CONF_FILE)
 
         self.assertTrue(os.path.exists(path))
 

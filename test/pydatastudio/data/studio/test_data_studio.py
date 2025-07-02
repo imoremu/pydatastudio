@@ -4,16 +4,16 @@ Created on 21 feb. 2021
 @author: imoreno
 '''
 import unittest
-from pydatastudio.data.studio.datastudio import DataStudio
-from pydatastudio.data.studio.abstractdatabasicstudent import AbstractDataBasicStudent
+from pydatastudio.data.studio.data_studio import DataStudio
+from pydatastudio.data.studio.students.abstract_data_basic_student import AbstractDataBasicStudent
 from unittest.mock import patch, Mock
 
 import pandas as pd
 
 class TestDataStudio(unittest.TestCase):
 
-    @patch('pydatastudio.data.studio.abstractdatabasicstudent.AbstractDataBasicStudent')
-    @patch('pydatastudio.data.studio.abstractdatabasicstudent.AbstractDataBasicStudent')
+    @patch('pydatastudio.data.studio.students.abstract_data_basic_student.AbstractDataBasicStudent')
+    @patch('pydatastudio.data.studio.students.abstract_data_basic_student.AbstractDataBasicStudent')
     def setUp(self, student_1, student_2):
         
         self.studio = DataStudio()

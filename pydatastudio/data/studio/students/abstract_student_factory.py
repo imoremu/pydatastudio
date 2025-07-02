@@ -7,7 +7,7 @@ Created on 24 Jun 2025
 from abc import ABC, abstractmethod
 from typing import Dict
 
-from pydatastudio.data.studio.datastudio import AbstractStudent
+from pydatastudio.data.studio.data_studio import AbstractStudent
 
 
 class AbstractStudentFactory(ABC):
