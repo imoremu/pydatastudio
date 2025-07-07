@@ -57,7 +57,7 @@ class StudentFactory(AbstractStudentFactory):
 
         if not class_path:
             self.logger.warning(f"Student '{name}' in configuration is missing the 'class' key. Skipping.")
-            return None
+            raise InvalidStudentConfigurationException("Student configuration is missing the 'class' key.")
         
         try:
             module_name, class_name = class_path.rsplit('.', 1)                        
@@ -71,12 +71,20 @@ class StudentFactory(AbstractStudentFactory):
             self.logger.info(f"Successfully created student '{name}' from class {class_path}")
             return student_obj
 
-        except (ModuleNotFoundError, ImportError):
-            self.logger.error(f"Could not find module for student '{name}' at path '{class_path}'. Please check the path. Skipping.")
-            return None
-        except AttributeError:
-            self.logger.error(f"Could not find class '{class_name}' in module '{module_name}' for student '{name}'. Please check the class name. Skipping.")
-            return None
+        except (ModuleNotFoundError, ImportError) as e:
+            self.logger.error(f"Could not import module for student '{name}' at path '{class_path}'. Please check the path. Error: {e}. Skipping.")
+            raise InvalidStudentConfigurationException(f"Could not import module for student '{name}' at path '{class_path}'.") from e
+        
+        except AttributeError as e:
+            self.logger.error(f"Could not find class '{class_name}' in module '{module_name}' for student '{name}'. Please check the class name. Error: {e}. Skipping.")
+            raise InvalidStudentConfigurationException(f"Could not find class '{class_name}' in module '{module_name}' for student '{name}'.") from e
+        
         except Exception as e:
             self.logger.error(f"An unexpected error occurred while creating student '{name}'. Error: {e}. Skipping.")
-            return None
+            raise InvalidStudentConfigurationException(f"An unexpected error occurred while creating student '{name}'.") from e
+        
+
+# Exceptions
+class InvalidStudentConfigurationException(Exception):
+    pass
+    

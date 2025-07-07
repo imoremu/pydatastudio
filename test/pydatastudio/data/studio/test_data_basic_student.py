@@ -109,7 +109,7 @@ class TestAbstractDataBasicStudent(unittest.TestCase):
         def mock_test_filtered_research(self, research_name, **attrs):
             data = {'col1': ['1', '2', '3', '4'], 'col2': ['A', 'B', 'C', 'A']}
             df = pd.DataFrame(data)
-            return {research_name: df}
+            return df
 
         config_dict = {
             ENVIRONMENT_STUDENT_KEY: "TestStudent",
@@ -136,18 +136,18 @@ class TestAbstractDataBasicStudent(unittest.TestCase):
         expected_df = pd.DataFrame({'col1': ['1', '3'], 'col2': ['A', 'C']})
         
         # Reset index
-        result["test_filtered_research"] = result["test_filtered_research"].reset_index(drop=True)
+        result = result.reset_index(drop=True)
         expected_df = expected_df.reset_index(drop=True)
 
         # Check data checking only data but no indexes:        
-        pd.testing.assert_frame_equal(result["test_filtered_research"], expected_df)
+        pd.testing.assert_frame_equal(result, expected_df)
 
 
     def test_research_with_no_output_filter_info(self):        
         def mock_test_no_filter_research(self, research_name, **attrs):
             data = {'col1': [1, 2, 3], 'col2': ['X', 'Y', 'Z']}
             df = pd.DataFrame(data)
-            return {research_name: df}
+            return df
 
         config_dict = {
             ENVIRONMENT_STUDENT_KEY: "TestStudent",
@@ -165,13 +165,13 @@ class TestAbstractDataBasicStudent(unittest.TestCase):
         result = self.student._research("test_no_filter_research")
 
         expected_df = pd.DataFrame({'col1': [1, 2, 3], 'col2': ['X', 'Y', 'Z']})
-        pd.testing.assert_frame_equal(result["test_no_filter_research"], expected_df)
+        pd.testing.assert_frame_equal(result, expected_df)
 
     def test_research_with_empty_output_filter_data(self):        
         def mock_test_empty_filter_research(self, research_name, **attrs):
             data = {'col1': [1, 2, 3], 'col2': ['X', 'Y', 'Z']}
             df = pd.DataFrame(data)
-            return {research_name: df}
+            return df
 
         config_dict = {
             ENVIRONMENT_STUDENT_KEY: "TestStudent",
@@ -194,7 +194,7 @@ class TestAbstractDataBasicStudent(unittest.TestCase):
         result = self.student._research("test_empty_filter_research")
 
         expected_df = pd.DataFrame({'col1': [1, 2, 3], 'col2': ['X', 'Y', 'Z']})
-        pd.testing.assert_frame_equal(result["test_empty_filter_research"], expected_df)
+        pd.testing.assert_frame_equal(result, expected_df)
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testJoinStudio']

@@ -6,6 +6,7 @@ Created on 24 dic. 2018
 import yaml
 from yaml.loader import FullLoader
 from pydatastudio.environment import environment_config
+from pydatastudio.environment.environment_config import _EnvironmentConfig
 
 environment_confs = {}
 
@@ -13,7 +14,7 @@ CONFIG_NAME = "config_name"
 CURRENT_ENVIRONMENT_NAME = "Current"
 
 
-def get_environment_config_by_yaml_file(file_name, current_environment=None):
+def get_environment_config_by_yaml_file(file_name, current_environment=None) -> _EnvironmentConfig:
     """
     Return the environment config paser associated to the yaml file name and environment.
     
@@ -41,7 +42,7 @@ def get_environment_config_by_yaml_file(file_name, current_environment=None):
     return result
 
 
-def get_environment_by_config(config, current_environment=None):
+def get_environment_by_config(config, current_environment=None) -> _EnvironmentConfig:
     """
     Return the config parser associated to the general config data and environment.
     
